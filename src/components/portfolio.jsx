@@ -14,9 +14,9 @@ const Portfolio = () => {
             {isMobileOrTablet || scrollerFlag ? (
                 <Izzath />
             ) : (
-                // <SmoothScroll>
-                <Izzath />
-                // </SmoothScroll>
+                <SmoothScroll>
+                    <Izzath />
+                </SmoothScroll>
             )}
             <footer>
             </footer>

@@ -4,7 +4,7 @@ import Luxy from 'luxy.js';
 const SmoothScroll = ({ children }) => {
     useEffect(() => {
         Luxy.init({
-            wrapperSpeed: 0.04,
+            wrapperSpeed: 0.06,
         });
 
         return () => {
