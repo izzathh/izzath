@@ -37,7 +37,9 @@ const Izzath = () => {
         openMenu,
         openLinksMenu,
         scrollToContainer,
-        sendEmail
+        sendEmail,
+        isLoading,
+        setIsLoading
     } = usePortfolio();
 
     const [mailContent, setMailContent] = useState({
@@ -219,6 +221,7 @@ const Izzath = () => {
 
     const handleSendEmail = async () => {
         try {
+            setIsLoading(true)
             await emailFormValidation.validate({
                 name: mailContent.name,
                 email: mailContent.email,
@@ -234,7 +237,10 @@ const Izzath = () => {
             })
 
             setErrors({})
+            setIsLoading(false)
+            return true
         } catch (errors) {
+            setIsLoading(false)
             if (errors instanceof Yup.ValidationError) {
                 const formatErrors = errors.inner.reduce((acc, error) => {
                     return { ...acc, [error.path]: error.message }
@@ -243,6 +249,7 @@ const Izzath = () => {
             } else {
                 console.error(errors);
             }
+            return false
         }
     }
 
@@ -279,7 +286,7 @@ const Izzath = () => {
                         filter: scrollY >= 600 || scrollY >= 500 || scrollY >= 400
                             ? 'grayscale(100%) brightness(0.1)'
                             : 'grayscale(100%) brightness(0.6)',
-                        background: `url(${izzathBg[0]["izzath-bg"]}) no-repeat center right`,
+                        background: `url(src/assets/images/izzath-bg.JPG) no-repeat center right`,
                         backgroundSize: 'cover',
                     }}
                     className="image-container"
@@ -469,6 +476,7 @@ const Izzath = () => {
                         mailContent={mailContent}
                         validateField={validateField}
                         handleSendEmail={handleSendEmail}
+                        isLoading={isLoading}
                     />
                 </Suspense>
             </div>

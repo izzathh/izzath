@@ -10,6 +10,7 @@ export const PortfolioProvider = ({ children }) => {
     const [showPdf, setShowPdf] = useState(false);
     const [resuemBase64, setResuemBase64] = useState('');
     const [scrollerFlag, setScrollerFlag] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const developerRef = useRef(null);
     const workRef = useRef(null);
@@ -64,12 +65,15 @@ export const PortfolioProvider = ({ children }) => {
                 })
             if (data.status === 1) {
                 alert(data.message)
+                setIsLoading(false)
                 return
             }
             alert('Something went unexpected while sending your mail.')
+            setIsLoading(false)
             return
         } catch (error) {
             console.error(error);
+            setIsLoading(false)
         }
     }
 
@@ -95,7 +99,9 @@ export const PortfolioProvider = ({ children }) => {
                 scrollerFlag,
                 setScrollerFlag,
                 scrollToContainer,
-                sendEmail
+                sendEmail,
+                isLoading,
+                setIsLoading
             }}
         >
             {children}

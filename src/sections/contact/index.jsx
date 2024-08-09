@@ -1,13 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
+import { FiLoader } from "react-icons/fi";
+
+const SentNotify = lazy(() => import('../../components/notification'))
 
 const Contact = ({
     errors,
     mailContent,
     validateField,
     handleSendEmail,
+    isLoading
 }) => {
 
     const [positionHitmeup, setPositionHitmeup] = useState({ x: 0, y: 0 });
+    const [clientName, setClientName] = useState('');
+
+    const handlePositionAndEmail = async () => {
+        console.log('mailContent:', mailContent.name);
+        setClientName(mailContent.name)
+        const isSent = await handleSendEmail()
+        if (isSent) {
+            setPositionHitmeup({ x: 0, y: 0 })
+            const x = document.getElementById('toast')
+            x.className = 'show';
+            setTimeout(() => {
+                x.className = x.className.replace("show", "")
+            }, 5000);
+            setClientName('')
+        }
+    }
 
     useEffect(() => {
         const container = document.getElementById('hit-me-up');
@@ -98,26 +118,31 @@ const Contact = ({
                             mohammedizzathh@gmail.com
                         </a>
                         <button
-                            onClick={handleSendEmail}
+                            onClick={handlePositionAndEmail}
                             id="hit-me-up"
+                            className={`${isLoading ? 'btn-bg-black' : ''}`}
                         >
-                            {positionHitmeup.y !== 0 && positionHitmeup.x !== 0 && (
+                            {positionHitmeup.y !== 0 && positionHitmeup.x !== 0 && !isLoading && (
                                 <div className="rocket-gif"></div>
                             )}
-                            <span
-                                className={`${positionHitmeup.y && positionHitmeup.x ? 'add-bg-for-span' : ''}`}
-                                style={{
-                                    position: 'relative',
-                                    top: `${positionHitmeup.y}px`,
-                                    left: `${positionHitmeup.x}px`,
-                                    backgroundColor: 'rgb(245 245 245)',
-                                    color: 'rgb(24 24 24)',
-                                }}
+                            {isLoading && <FiLoader />}
+                            {!isLoading && (
+                                <span
+                                    className={`${positionHitmeup.y && positionHitmeup.x && !isLoading ? 'add-bg-for-span' : ''}`}
+                                    style={{
+                                        position: 'relative',
+                                        top: `${positionHitmeup.y}px`,
+                                        left: `${positionHitmeup.x}px`,
+                                        backgroundColor: 'rgb(245 245 245)',
+                                        color: 'rgb(24 24 24)',
+                                    }}
 
-                            >Hit me up</span>
+                                >Hit me up</span>
+                            )}
                         </button>
                     </div>
                 </div>
+                {/* <SentNotify client={clientName} /> */}
             </div>
         </>
     )
