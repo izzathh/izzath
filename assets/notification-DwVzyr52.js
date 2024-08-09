@@ -1,0 +1,1 @@
+import{j as s}from"./index-B0-oLJu7.js";const d=({client:i})=>s.jsxs("div",{id:"toast",children:[s.jsx("div",{id:"img",children:"Icon"}),s.jsxs("div",{id:"desc",children:["I Got You ",i,"..."]})]});export{d as default};
