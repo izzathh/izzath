@@ -286,7 +286,7 @@ const Izzath = () => {
                         filter: scrollY >= 600 || scrollY >= 500 || scrollY >= 400
                             ? 'grayscale(100%) brightness(0.1)'
                             : 'grayscale(100%) brightness(0.6)',
-                        background: `url(src/assets/images/izzath-bg.JPG) no-repeat center right`,
+                        background: `url(${izzathBg[0]["izzath-bg"]}) no-repeat center right`,
                         backgroundSize: 'cover',
                     }}
                     className="image-container"
